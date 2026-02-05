@@ -6173,6 +6173,217 @@ function switchNightMode(){
     }
 }
 </script>
+
+<script>
+// 评分系统实现
+$(document).ready(function() {
+    // 评分数据存储
+    var ratings = JSON.parse(localStorage.getItem('websiteRatings')) || {};
+    
+    // 初始化评分
+    $('.url-card').each(function(index) {
+        var card = $(this);
+        var websiteName = card.find('strong').text().trim();
+        var ratingData = ratings[websiteName] || { score: 0, count: 0, userRated: false };
+        
+        // 检查是否已添加评分系统
+        if (!card.find('.rating-display').length) {
+            // 添加评分展示区
+            var ratingHtml = '<div class="rating-display mt-1">' +
+                '<div class="stars">' +
+                    '<i class="far fa-star text-warning"></i>' +
+                    '<i class="far fa-star text-warning"></i>' +
+                    '<i class="far fa-star text-warning"></i>' +
+                    '<i class="far fa-star text-warning"></i>' +
+                    '<i class="far fa-star text-warning"></i>' +
+                '</div>' +
+                '<span class="rating-count text-xs text-muted">(0人评分)</span>' +
+            '</div>' +
+            '<button class="rate-btn btn btn-xs btn-outline-primary mt-1">我要评分</button>';
+            
+            // 插入到描述上方
+            card.find('.url-info p').before(ratingHtml);
+        }
+        
+        // 更新评分显示
+        updateRatingDisplay(card, ratingData);
+        
+        // 如果用户已评分，隐藏评分按钮
+        if (ratingData.userRated) {
+            card.find('.rate-btn').hide();
+        }
+    });
+    
+    // 评分按钮点击事件
+    $(document).on('click', '.rate-btn', function(e) {
+        e.stopPropagation(); // 阻止事件冒泡，防止跳转到网站
+        e.preventDefault(); // 阻止默认行为
+        
+        var btn = $(this);
+        var card = btn.closest('.url-card');
+        var websiteName = card.find('strong').text().trim();
+        
+        // 检查是否已评分
+        if (ratings[websiteName] && ratings[websiteName].userRated) {
+            alert('您已经对该网站进行过评分了');
+            return;
+        }
+        
+        // 创建评分选择器
+        var ratingSelector = $('<div class="rating-selector">' +
+            '<i class="far fa-star"></i>' +
+            '<i class="far fa-star"></i>' +
+            '<i class="far fa-star"></i>' +
+            '<i class="far fa-star"></i>' +
+            '<i class="far fa-star"></i>' +
+            '</div>');
+        
+        // 插入评分选择器
+        btn.before(ratingSelector);
+        btn.hide();
+        
+        // 评分选择事件
+        ratingSelector.find('i').hover(function() {
+            var index = $(this).index();
+            ratingSelector.find('i').each(function(i) {
+                if (i <= index) {
+                    $(this).removeClass('far').addClass('fas text-warning');
+                } else {
+                    $(this).removeClass('fas text-warning').addClass('far');
+                }
+            });
+        }).click(function(e) {
+            e.stopPropagation(); // 阻止事件冒泡
+            e.preventDefault(); // 阻止默认行为
+            
+            var score = $(this).index() + 1;
+            submitRating(card, websiteName, score);
+            ratingSelector.remove();
+            // btn.show(); // 评分完成后不显示按钮
+        });
+        
+        // 点击外部关闭评分选择器
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.rating-selector, .rate-btn').length) {
+                ratingSelector.remove();
+                btn.show();
+            }
+        });
+    });
+    
+    // 提交评分
+    function submitRating(card, websiteName, score) {
+        var currentRating = ratings[websiteName] || { score: 0, count: 0 };
+        var newTotalScore = currentRating.score * currentRating.count + score;
+        var newCount = currentRating.count + 1;
+        var newAverage = newTotalScore / newCount;
+        
+        // 更新评分数据
+        ratings[websiteName] = {
+            score: newAverage,
+            count: newCount,
+            userRated: true
+        };
+        
+        // 保存到本地存储
+        localStorage.setItem('websiteRatings', JSON.stringify(ratings));
+        
+        // 更新显示
+        updateRatingDisplay(card, ratings[websiteName]);
+        
+        // 隐藏评分按钮
+        card.find('.rate-btn').hide();
+        
+        // 显示感谢提示
+        showThankYouMessage();
+    }
+    
+    // 更新评分显示
+    function updateRatingDisplay(card, ratingData) {
+        var stars = card.find('.stars i');
+        var averageScore = ratingData.score || 0;
+        var fullStars = Math.floor(averageScore);
+        var hasHalfStar = averageScore % 1 >= 0.5;
+        
+        // 更新星星显示
+        stars.each(function(index) {
+            if (index < fullStars) {
+                $(this).removeClass('far').addClass('fas text-warning');
+            } else if (index === fullStars && hasHalfStar) {
+                $(this).removeClass('far fas').addClass('fas fa-star-half-alt text-warning');
+            } else {
+                $(this).removeClass('fas text-warning').addClass('far');
+            }
+        });
+        
+        // 更新评分人数
+        card.find('.rating-count').text('(' + ratingData.count + '人评分)');
+    }
+    
+    // 显示感谢提示
+    function showThankYouMessage() {
+        var message = $('<div class="thank-you-message">感谢您的评价！</div>');
+        message.css({
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            padding: '15px 30px',
+            borderRadius: '5px',
+            fontSize: '18px',
+            zIndex: '9999',
+            textAlign: 'center'
+        });
+        
+        $('body').append(message);
+        
+        // 2秒后隐藏
+        setTimeout(function() {
+            message.fadeOut(500, function() {
+                $(this).remove();
+            });
+        }, 2000);
+    }
+});
+</script>
+
+<style>
+.rating-display {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.rating-selector {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.rating-selector i {
+    font-size: 16px;
+    color: #ccc;
+    transition: color 0.2s;
+}
+
+.rating-selector i:hover {
+    color: #ffc107;
+}
+
+.rate-btn {
+    font-size: 12px;
+    padding: 2px 8px;
+}
+</style>
+
 </body>
 </html>
 
