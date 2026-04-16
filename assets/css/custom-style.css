@@ -149,9 +149,9 @@ footer.main-footer .footer-text a:hover {
 }
 
 .mode-btn.active {
-    background: linear-gradient(135deg, #f1404b, #ff6b6b);
+    background: linear-gradient(135deg, #2c2e2f, #4a4c4f);
     color: #fff;
-    box-shadow: 0 4px 15px rgba(241, 64, 75, 0.4);
+    box-shadow: 0 4px 15px rgba(44, 46, 47, 0.4);
 }
 
 .io-black-mode .mode-toggle {
@@ -182,7 +182,7 @@ footer.main-footer .footer-text a:hover {
 
 /* AI 头部 */
 .ai-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #2c2e2f 0%, #4a4c4f 100%);
     padding: 25px 30px;
     text-align: center;
 }
@@ -273,7 +273,7 @@ footer.main-footer .footer-text a:hover {
 }
 
 .ai-message-bot .ai-avatar {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #2c2e2f 0%, #4a4c4f 100%);
 }
 
 .ai-message-bot .ai-avatar i {
@@ -288,7 +288,7 @@ footer.main-footer .footer-text a:hover {
 .ai-message-user .ai-avatar {
     margin-right: 0;
     margin-left: 12px;
-    background: linear-gradient(135deg, #f1404b 0%, #ff6b6b 100%);
+    background: linear-gradient(135deg, #5c5c5c 0%, #7c7c7c 100%);
 }
 
 .ai-message-user .ai-avatar i {
@@ -317,7 +317,7 @@ footer.main-footer .footer-text a:hover {
 }
 
 .ai-message-user .ai-message-content p {
-    background: linear-gradient(135deg, #f1404b 0%, #ff6b6b 100%);
+    background: linear-gradient(135deg, #5c5c5c 0%, #7c7c7c 100%);
     color: #fff;
     border-top-left-radius: 18px;
     border-top-right-radius: 4px;
@@ -343,9 +343,9 @@ footer.main-footer .footer-text a:hover {
 }
 
 .ai-suggestion-btn:hover {
-    border-color: #f1404b;
-    color: #f1404b;
-    background: rgba(241, 64, 75, 0.05);
+    border-color: #5c5c5c;
+    color: #333;
+    background: rgba(92, 92, 92, 0.08);
 }
 
 .io-black-mode .ai-suggestion-btn {
@@ -355,8 +355,8 @@ footer.main-footer .footer-text a:hover {
 }
 
 .io-black-mode .ai-suggestion-btn:hover {
-    border-color: #f1404b;
-    color: #f1404b;
+    border-color: #888;
+    color: #fff;
 }
 
 /* AI 输入区域 */
@@ -395,8 +395,8 @@ footer.main-footer .footer-text a:hover {
 }
 
 .ai-input:focus {
-    border-color: #f1404b;
-    box-shadow: 0 0 0 3px rgba(241, 64, 75, 0.1);
+    border-color: #5c5c5c;
+    box-shadow: 0 0 0 3px rgba(92, 92, 92, 0.1);
 }
 
 .ai-send-btn {
@@ -404,7 +404,7 @@ footer.main-footer .footer-text a:hover {
     height: 45px;
     border: none;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f1404b 0%, #ff6b6b 100%);
+    background: linear-gradient(135deg, #2c2e2f 0%, #4a4c4f 100%);
     color: #fff;
     cursor: pointer;
     display: flex;
@@ -415,7 +415,7 @@ footer.main-footer .footer-text a:hover {
 
 .ai-send-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(241, 64, 75, 0.4);
+    box-shadow: 0 4px 15px rgba(44, 46, 47, 0.4);
 }
 
 .ai-send-btn:active {
@@ -490,8 +490,8 @@ footer.main-footer .footer-text a:hover {
 }
 
 .ai-recommendation-card:hover {
-    border-color: #f1404b;
-    box-shadow: 0 4px 12px rgba(241, 64, 75, 0.15);
+    border-color: #5c5c5c;
+    box-shadow: 0 4px 12px rgba(92, 92, 92, 0.2);
     transform: translateX(5px);
 }
 
@@ -547,7 +547,7 @@ footer.main-footer .footer-text a:hover {
 }
 
 .ai-recommendation-card:hover .ai-rec-arrow {
-    color: #f1404b;
+    color: #5c5c5c;
 }
 
 /* 推荐结果区域 */
