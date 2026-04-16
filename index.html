@@ -332,7 +332,19 @@
 
 
 <div class="header-big  post-top css-color mb-4" id="search-bg" style="">
-    <div class="s-search">
+    <div class="mode-toggle-container">
+        <div class="mode-toggle">
+            <button id="mode-traditional" class="mode-btn active">
+                <i class="fas fa-th-large"></i>
+                <span>传统模式</span>
+            </button>
+            <button id="mode-recommend" class="mode-btn">
+                <i class="fas fa-robot"></i>
+                <span>智能推荐</span>
+            </button>
+        </div>
+    </div>
+    <div class="s-search" id="traditional-search">
         <div id="search" class="s-search mx-auto">
             <div id="search-list-menu" class="hide-type-list">
                 <div class="s-type text-center">
@@ -571,10 +583,60 @@
         </div>
     </div>
 
+    <div class="s-search" id="recommend-mode" style="display: none;">
+        <div class="ai-container">
+            <div class="ai-header">
+                <i class="fas fa-robot"></i>
+                <span>智能导航助手</span>
+                <p class="ai-hint">告诉我你想做什么，我来为你推荐合适的网站</p>
+            </div>
+            <div class="ai-chat-container">
+                <div class="ai-chat-messages" id="ai-chat-messages">
+                    <div class="ai-message ai-message-bot">
+                        <div class="ai-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="ai-message-content">
+                            <p>你好！我是你的智能导航助手。你可以这样问我：</p>
+                            <div class="ai-suggestions">
+                                <button class="ai-suggestion-btn" data-query="我想看电影">我想看电影</button>
+                                <button class="ai-suggestion-btn" data-query="我需要找工作">我需要找工作</button>
+                                <button class="ai-suggestion-btn" data-query="我想学习编程">我想学习编程</button>
+                                <button class="ai-suggestion-btn" data-query="我想买东西">我想买东西</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-input-area">
+                    <div class="ai-input-wrapper">
+                        <input type="text" id="ai-input" class="ai-input" placeholder="输入你的需求，例如：我想看电影、我需要找工作...">
+                        <button id="ai-send-btn" class="ai-send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="recommend-results" style="display: none;">
+        <div class="recommend-header">
+            <h4 class="text-gray text-lg mb-4">
+                <i class="site-tag iconfont icon-tag icon-lg mr-1"></i>
+                <span id="recommend-title">为你推荐</span>
+            </h4>
+            <button id="back-to-chat" class="btn btn-outline-danger btn-sm">
+                <i class="fas fa-arrow-left mr-1"></i>返回对话
+            </button>
+        </div>
+        <div class="row" id="recommend-list">
+        </div>
+    </div>
+
 </div>
 
 
-<div id="content" class="content-site customize-site">
+<div id="traditional-content" class="content-site customize-site">
 
 
 
@@ -6069,6 +6131,7 @@ var theme = {"ajaxurl":"","addico":"https:\/\/nav.baidu.cn\/wp-content\/themes\/
 <script type='text/javascript' src='./assets/js/fancybox.min-3.5.7.js' id='lightbox-js-js'></script>
 
 <script type='text/javascript' src='./assets/js/app-anim.js' id='appanim-js'></script>
+<script type='text/javascript' src='./assets/js/smart-recommend.js' id='smart-recommend-js'></script>
 
 <script type="text/javascript">
     $(document).ready(function(){
